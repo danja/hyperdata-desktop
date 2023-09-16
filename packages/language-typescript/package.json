@@ -1,0 +1,18 @@
+{
+  "name": "language-typescript",
+  "version": "0.6.4",
+  "description": "TypeScript language support in Atom",
+  "keywords": [
+    "tree-sitter"
+  ],
+  "engines": {
+    "atom": ">=1.19.1",
+    "node": ">=12"
+  },
+  "main": "lib/main",
+  "repository": "https://github.com/pulsar-edit/pulsar",
+  "license": "MIT",
+  "dependencies": {
+    "tree-sitter-typescript": "0.20.1"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "language-sass",
+  "version": "0.62.2",
+  "description": "Sass/SCSS language support in Atom",
+  "license": "MIT",
+  "engines": {
+    "atom": "*",
+    "node": "*"
+  },
+  "repository": "https://github.com/pulsar-edit/pulsar",
+  "devDependencies": {
+    "dedent": "^0.7.0"
+  }
+}

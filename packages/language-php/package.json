@@ -1,0 +1,11 @@
+{
+  "name": "language-php",
+  "version": "0.48.1",
+  "description": "PHP language support in Atom",
+  "engines": {
+    "atom": "*",
+    "node": "*"
+  },
+  "repository": "https://github.com/pulsar-edit/pulsar",
+  "license": "MIT"
+}

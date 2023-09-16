@@ -1,0 +1,40 @@
+.syntax--markup {
+
+  &.syntax--bold {
+    font-weight: bold;
+  }
+  &.syntax--italic {
+    font-style: italic;
+  }
+
+  &.syntax--heading {
+    color: @blue;
+  }
+
+  &.syntax--link {
+    color: @cyan;
+  }
+
+  &.syntax--deleted {
+    color: @red;
+  }
+
+  &.syntax--changed {
+    color: @yellow;
+  }
+
+  &.syntax--inserted {
+    color: @cyan;
+  }
+
+  &.syntax--heading {
+    .syntax--punctuation {
+      color: inherit;
+    }
+  }
+
+  &.syntax--quote {
+    color: @syntax-comment-color;
+    font-style: italic;
+  }
+}

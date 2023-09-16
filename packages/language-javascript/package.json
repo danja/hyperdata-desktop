@@ -1,0 +1,20 @@
+{
+  "name": "language-javascript",
+  "version": "0.134.2",
+  "description": "JavaScript language support in Atom",
+  "engines": {
+    "atom": "*",
+    "node": ">=16"
+  },
+  "main": "lib/main",
+  "repository": "https://github.com/pulsar-edit/pulsar",
+  "license": "MIT",
+  "keywords": [
+    "tree-sitter"
+  ],
+  "dependencies": {
+    "tree-sitter-javascript": "0.19.0",
+    "tree-sitter-jsdoc": "0.19.0",
+    "tree-sitter-regex": "0.19.0"
+  }
+}
