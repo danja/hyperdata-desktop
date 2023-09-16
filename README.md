@@ -10,6 +10,8 @@ The [Hyperdata Knowledge Management System](https://hyperdata.it/hkms/) is an in
 
 Electron's ties to Web technologies suggest it should be a good environment in which to use the HKMS apps as a unified application. On the desktop, access to the local filesystem is indispensable, and text editing is the first requirement. These, and some of the other facilities built into Pulsar suggest it as a better starting point than a blank-slate Electron.
 
+The core may well be hacked in the near future, so Pulsar's [install from source](https://pulsar-edit.dev/docs/launch-manual/sections/core-hacking/#building-and-running-the-application) are the instructions to follow for the time being.
+
 _There are many, many files in the Pulsar repo. It seems likely that some kind of partner stripped-down repo for hkms-desktop will be desirable, but that's a job for the distant future._
 
-Pulsar has a MIT license, so that will carry over for the code here. For any added content, docs etc. CC Attribution will probably be applied.
+Pulsar has an MIT license, so that will carry over for the code here. For any added content, docs etc. CC Attribution will probably be applied.
