@@ -1,3 +1,4 @@
+/*
 var static = require('node-static');
 var file = new static.Server(`${__dirname}/../`)
 
@@ -16,3 +17,4 @@ require('http').createServer(function (request, response) {
 }).listen(8404)
 // /home/danny/HKMS/hkms-desktop/src/hkms/http-server
 // 
+*/
