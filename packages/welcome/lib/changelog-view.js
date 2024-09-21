@@ -50,33 +50,23 @@ export default class ChangeLogView {
             <p>Feel free to read our <a href="https://github.com/pulsar-edit/pulsar/blob/master/CHANGELOG.md">Full Change Log</a>.</p>
             <ul>
               <li>
-                Fixed a race condition that could cause `autocomplete-plus` to ignore user input.
+                Resolved some issues of using <code>pulsar -p</code> to access <code>ppm</code> in the command line on Windows.
               </li>
               <li>
-                Fixed the `about` package linking to release notes for Pulsar.
+                Added a new icon for Pulsar on Windows, increasing it's visual fidelity in most locations.
               </li>
               <li>
-                Reduced the amount of network requests that `settings-view` creates.
+                [snippets] Fixed an issue with expanding snippet variables in certain scenarios if the snippet inserted new lines into the buffer.
               </li>
               <li>
-                Fixed the icon used when registering Pulsar as a file handler on Windows.
+                Updated misconfigured links in the <code>CONTRIBUTING.md</code> file.
               </li>
               <li>
-                Removed the non-functional `autoUpdate` API from Pulsar, instead relying on the `pulsar-updater` package.
+                [ppm] Resolved an issue that could prevent renaming an existing package.
               </li>
               <li>
-                Ensure that project-specific setting overrides don't leak to the user's config file when the settings UI is visited.
+                Various Tree-sitter improvements (folds, indents, custom queries, grammar updates...)
               </li>
-              <li>
-                Prevented warnings in the developer console from appearing when autocomplete suggestions are shown.
-              </li>
-              <li>
-                Removed the last CoffeeScript code from Pulsar and core packages.
-              </li>
-              <li>
-                Migrated the majority of our CI to GitHub Actions.
-              </li>
-
             </ul>
 
             <section className="welcome-panel">

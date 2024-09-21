@@ -1,7 +1,5 @@
 const {CompositeDisposable, Disposable, Point, Range} = require('atom')
 const path = require('path')
-const fuzzaldrin = require('fuzzaldrin')
-const fuzzaldrinPlus = require('fuzzaldrin-plus')
 
 const ProviderManager = require('./provider-manager')
 const SuggestionList = require('./suggestion-list')
@@ -190,7 +188,6 @@ class AutocompleteManager {
     this.subscriptions.add(atom.config.observe('autocomplete-plus.enableAutoActivation', (value) => { this.autoActivationEnabled = value }))
     this.subscriptions.add(atom.config.observe('autocomplete-plus.enableAutoConfirmSingleSuggestion', (value) => { this.autoConfirmSingleSuggestionEnabled = value }))
     this.subscriptions.add(atom.config.observe('autocomplete-plus.consumeSuffix', (value) => { this.consumeSuffix = value }))
-    this.subscriptions.add(atom.config.observe('autocomplete-plus.useAlternateScoring', (value) => { this.useAlternateScoring = value }))
     this.subscriptions.add(atom.config.observe('autocomplete-plus.fileBlacklist', (value) => {
       if (value) {
         this.fileBlacklist = value.map((s) => { return s.trim() })
@@ -365,7 +362,6 @@ class AutocompleteManager {
 
   filterSuggestions (suggestions, {prefix}) {
     const results = []
-    const fuzzaldrinProvider = this.useAlternateScoring ? fuzzaldrinPlus : fuzzaldrin
     for (let i = 0; i < suggestions.length; i++) {
       // sortScore mostly preserves in the original sorting. The function is
       // chosen such that suggestions with a very high match score can break out.
@@ -377,14 +373,15 @@ class AutocompleteManager {
       const text = (suggestion.snippet || suggestion.text)
       const suggestionPrefix = suggestion.replacementPrefix != null ? suggestion.replacementPrefix : prefix
       const prefixIsEmpty = !suggestionPrefix || suggestionPrefix === ' '
-      const firstCharIsMatch = !prefixIsEmpty && suggestionPrefix[0].toLowerCase() === text[0].toLowerCase()
 
       if (prefixIsEmpty) {
         results.push(suggestion)
-      }
-      if (firstCharIsMatch && (score = fuzzaldrinProvider.score(text, suggestionPrefix)) > 0) {
-        suggestion.score = score * suggestion.sortScore
-        results.push(suggestion)
+      } else {
+        const keepMatching = suggestion.ranges || suggestionPrefix[0].toLowerCase() === text[0].toLowerCase()
+        if (keepMatching && (score = atom.ui.fuzzyMatcher.score(text, suggestionPrefix)) > 0) {
+          suggestion.score = score * suggestion.sortScore
+          results.push(suggestion)
+        }
       }
     }
 
@@ -617,28 +614,36 @@ See https://github.com/atom/autocomplete-plus/wiki/Provider-API`
     if (cursors == null) { return }
 
     return this.editor.transact(() => {
-      for (let i = 0; i < cursors.length; i++) {
-        const cursor = cursors[i]
-        const endPosition = cursor.getBufferPosition()
-        const beginningPosition = [endPosition.row, endPosition.column - suggestion.replacementPrefix.length]
+      if(suggestion.ranges) {
+        for (let i = 0; i < suggestion.ranges.length; i++) {
+          const range = suggestion.ranges[i]
+          this.editor.setTextInBufferRange(
+            range, suggestion.text != null ? suggestion.text : suggestion.snippet
+          )
+        }
+      } else {
+        for (let i = 0; i < cursors.length; i++) {
+          const cursor = cursors[i]
+          const endPosition = cursor.getBufferPosition()
+          const beginningPosition = [endPosition.row, endPosition.column - suggestion.replacementPrefix.length]
 
-        if (this.editor.getTextInBufferRange([beginningPosition, endPosition]) === suggestion.replacementPrefix) {
-          const suffix = this.consumeSuffix ? this.getSuffix(this.editor, endPosition, suggestion) : ''
-          if (suffix.length) { cursor.moveRight(suffix.length) }
-          cursor.selection.selectLeft(suggestion.replacementPrefix.length + suffix.length)
+          if (this.editor.getTextInBufferRange([beginningPosition, endPosition]) === suggestion.replacementPrefix) {
+            const suffix = this.consumeSuffix ? this.getSuffix(this.editor, endPosition, suggestion) : ''
+            if (suffix.length) { cursor.moveRight(suffix.length) }
+            cursor.selection.selectLeft(suggestion.replacementPrefix.length + suffix.length)
 
-          if ((suggestion.snippet != null) && (this.snippetsManager != null)) {
-            this.snippetsManager.insertSnippet(suggestion.snippet, this.editor, cursor)
-          } else {
-            cursor.selection.insertText(suggestion.text != null ? suggestion.text : suggestion.snippet, {
-              autoIndentNewline: this.editor.shouldAutoIndent(),
-              autoDecreaseIndent: this.editor.shouldAutoIndent()
-            })
+            if ((suggestion.snippet != null) && (this.snippetsManager != null)) {
+              this.snippetsManager.insertSnippet(suggestion.snippet, this.editor, cursor)
+            } else {
+              cursor.selection.insertText(suggestion.text != null ? suggestion.text : suggestion.snippet, {
+                autoIndentNewline: this.editor.shouldAutoIndent(),
+                autoDecreaseIndent: this.editor.shouldAutoIndent()
+              })
+            }
           }
         }
       }
-    }
-    )
+    })
   }
 
   getSuffix (editor, bufferPosition, suggestion) {

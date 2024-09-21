@@ -62,11 +62,5 @@ if (args.resourcePath) {
   }
 }
 
-const { fork } = require('child_process')
-// const s = fork(`${__dirname}/../hkms/http-server/server.js`)
-// const { fork2 } = require('child_process')
-const p = fork(`${__dirname}/../hkms/http-server/page.js`)
-
 const start = require(path.join(resourcePath, 'src', 'main-process', 'start'));
 start(resourcePath, devResourcePath, startTime);
-

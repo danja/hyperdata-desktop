@@ -46,6 +46,7 @@ const TextBuffer = require('text-buffer');
 const TextEditorRegistry = require('./text-editor-registry');
 const StartupTime = require('./startup-time');
 const { getReleaseChannel } = require('./get-app-details.js');
+const UI = require('./ui.js');
 const packagejson = require("../package.json");
 
 const stat = util.promisify(fs.stat);
@@ -144,7 +145,8 @@ class AtomEnvironment {
       config: this.config,
       styleManager: this.styles,
       notificationManager: this.notifications,
-      viewRegistry: this.views
+      viewRegistry: this.views,
+      applicationDelegate: this.applicationDelegate
     });
 
     /** @type {MenuManager} */
@@ -225,6 +227,8 @@ class AtomEnvironment {
       urlForum: packagejson.branding.urlForum,
       urlCoreRepo: packagejson.repository.url
     };
+
+    this.ui = UI;
 
     // Keep instances of HistoryManager in sync
     this.disposables.add(

@@ -1,0 +1,16 @@
+{
+    "output": {
+        "filePath": "./pulsar-repopack.txt",
+        "headerText": "Pulsar repo",
+        "removeComments": true
+    },
+    "ignore": {
+        "useDefaultPatterns": true,
+        "customPatterns": [
+            "**/*repopack*",
+            ".git",
+            "node_modules",
+            "*.log"
+        ]
+    }
+}
