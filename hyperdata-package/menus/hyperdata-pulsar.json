@@ -1,0 +1,26 @@
+{
+  "context-menu": {
+    "atom-text-editor": [
+      {
+        "label": "Toggle hyperdata-pulsar",
+        "command": "hyperdata-pulsar:toggle"
+      }
+    ]
+  },
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "hyperdata-pulsar",
+          "submenu": [
+            {
+              "label": "Toggle",
+              "command": "hyperdata-pulsar:toggle"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
