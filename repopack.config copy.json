@@ -1,0 +1,28 @@
+{
+    "output": {
+        "filePath": "repopack_hyperdata-desktop.txt",
+        "removeComments": true,
+        "removeEmptyLines": true
+    },
+    "include": [
+        "src/**/*.js",
+        "src/**/*.ts",
+        "packages/**/lib/**/*.js",
+        "packages/**/lib/**/*.ts",
+        "**/package.json"
+    ],
+    "ignore": {
+        "useGitignore": true,
+        "useDefaultPatterns": true,
+        "customPatterns": [
+            "**/*repopack*",
+            "node_modules",
+            "spec",
+            "test",
+            "**/*.md",
+            "**/*.txt",
+            "static",
+            "resources"
+        ]
+    }
+}
